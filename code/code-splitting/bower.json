@@ -1,0 +1,21 @@
+{
+  "name": "code",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Stealth <st32lth@gmail.com> (http://github.com/st32lth)"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "page": "visionmedia/page.js#~1.6.4"
+  }
+}

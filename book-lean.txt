@@ -1,4 +1,4 @@
-chapter0/chapter0.md
-chapter1-entry-output/chapter1-entry-output.md
-chapter2-loaders/chapter2-loaders.md
-chapter5-plugins/chapter5-plugins.md
+chapter0.md
+chapter1-entry-output.md
+chapter2-loaders.md
+chapter5-plugins.md

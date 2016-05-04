@@ -203,3 +203,4 @@ second.bundle.js    1.46 kB       2  [emitted]  second
 If you look at the output, Webpack is using JSONP to download the chunck when needed.
 
 We can clean up the modules set up by moving the `main.js` file to the `mymodules` folder and update the `webpack.config.js` settings. The final code is in the [code/entry-options](../../code/entry-options) folder.
+

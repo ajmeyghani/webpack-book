@@ -45,3 +45,28 @@ The `output` property defines how to output the bundles. Below is a full list of
 
 In this section we are going to focus on the most important ones and briefly talk about the other options.
 
+### `output.path`
+
+**TODO**
+
+### `output.filename`
+
+**TODO**
+
+### `output.publicPath`
+
+**TODO**
+
+### `output.pathinfo`
+
+**TODO**
+
+### `output.library`
+
+**TODO**
+
+### `output.libraryTarget`
+
+**TODO**
+
+

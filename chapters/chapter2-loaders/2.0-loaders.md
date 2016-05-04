@@ -7,7 +7,7 @@
 - For example, if you want to `require` a css file, you have to pass it through two loaders, i.e. `css` and `style` loaders
 - The simplest loader that we can install is the `raw` loader. We can use it to load a `html` file.
 
-## The `raw` Loader
+## `raw` Loader
 
 The `raw` loader reads the content of a file, converts it to a string and exports that string when it is required. So, we are going to install the loader, make a `html` file and then load it into our app in `main.js`.
 

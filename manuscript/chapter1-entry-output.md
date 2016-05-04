@@ -219,6 +219,7 @@ second.bundle.js    1.46 kB       2  [emitted]  second
 If you look at the output, Webpack is using JSONP to download the chunck when needed.
 
 We can clean up the modules set up by moving the `main.js` file to the `mymodules` folder and update the `webpack.config.js` settings. The final code is in the [code/entry-options](../../code/entry-options) folder.
+
 ## Output in Detail
 
 In the previous chapter we briefly touched on the `output` property. In this section we are going to look at this option in detail.
@@ -265,4 +266,29 @@ The `output` property defines how to output the bundles. Below is a full list of
 - `output.crossOriginLoading`: This option enables cross-origin loading of chunks
 
 In this section we are going to focus on the most important ones and briefly talk about the other options.
+
+### `output.path`
+
+**TODO**
+
+### `output.filename`
+
+**TODO**
+
+### `output.publicPath`
+
+**TODO**
+
+### `output.pathinfo`
+
+**TODO**
+
+### `output.library`
+
+**TODO**
+
+### `output.libraryTarget`
+
+**TODO**
+
 

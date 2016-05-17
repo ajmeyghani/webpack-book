@@ -9,10 +9,12 @@
 
 ## `raw` Loader
 
-The `raw` loader reads the content of a file, converts it to a string and exports that string when it is required. So, we are going to install the loader, make a `html` file and then load it into our app in `main.js`.
+The `raw` loader reads the content of a file, converts it to a string and exports that string when it is required. Let's demonstrate this with an example. In this example we are going to make a `html` file and then load it into our app in a `main.js` file.
 
-- Install the `raw` loader with: `npm i raw-loader -D`.
-- Then open the `webpack.config.js` file and tell webpack to pass `html` files through the `raw` loader:
+Like always, make a folder, run `npm init` and make a `main.js` file. Then, follow the steps below.
+
+- Install the `raw` loader along with Webpack: `npm i webpack raw-loader -D`.
+- Then create the `webpack.config.js` file and the following to it:
 
 ```javascript
 module.exports = {
@@ -21,20 +23,27 @@ module.exports = {
     path: './dist',
     filename: 'bundle.js'
   },
-  // -> adding loader here.
-  module: {
-    loaders: [
-      { test: /\.html$/, loader: 'raw' }
+  // -----------New Stuff --------------
+  module: {              // module object contains the loaders definition
+    loaders: [           // The loaders array containing loader object definitions
+      {                  // Our first loader definition
+        test: /\.html$/,   // Matches any file that ends with the .html extension
+        loader: 'raw'      // Uses the `raw` loader when an html file is required.
+      }                    // e.g require('path/to/home.tpl.html')
     ]
   }
-  // -> end.
+// -----------New Stuff --------------
 };
 ```
 
 So we added the `module` field that specifies the loaders that we want to use for our module.
 
 - Loaders is an array of objects
-- Each object describes the loader. Every loader object at least has to attributes: `test` and `loader`. Test is a regular expression matching a file pattern. For example, `/\.html$/` means any file that ends with `.html`. The other attribute is `loader` which is the name of the loader that we want to use. In this case, the loader that we want to use is the `raw` loader.
+
+- Each object describes the loader. Every loader object at least has two attributes: `test` and `loader`.
+
+    - Test is a regular expression matching a file pattern. For example, `/\.html$/` means any file that ends with `.html`.
+    - The other field is the`loader` option. This specifies the name of the loader that we want to use. In this case, the loader that we want to use is the `raw` loader. The `-loader` suffix is optional, both `raw-loader` and `raw` would work here.
 
 Now lets add a basic html file and load it in `main.js`.
 

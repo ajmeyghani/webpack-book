@@ -55,6 +55,30 @@ As you can see the content of the css file has been exported as a string literal
 
 ### Creating Separate CSS Outputs
 
+Install the plugin and then require it.
+
+
+First you need to use the extract plugin the loader definition. and then specify the name of the output file by defining a plugin definition
+
+```javascript
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var webpack = require('webpack');
+
+module.exports = {
+  // entry, output definitions ...
+  module: {
+    loaders: [
+      {
+        test:/\.css$/, loader:  ExtractTextPlugin.extract('style-loader', 'css-loader')
+      }
+    ]
+  },
+  plugins: [
+    new ExtractTextPlugin('main.css')
+  ]
+};
+```
+
 
 **TODO**
 

@@ -16,3 +16,8 @@ In *Chapter 7* we will look at some common workflows in front-end development wi
 
 In *Chapter 8* we will briefly how you can use Webpack to transpile server-side JavaScript code.
 
+
+## Project Files
+
+All the project files for the book are hosted on github: https://github.com/aminmeyghani/webpack-book/tree/master/code. You can simply download the zip or clone the repo on your local machine.
+

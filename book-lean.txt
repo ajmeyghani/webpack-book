@@ -4,3 +4,6 @@ chapter2-entry-output.md
 chapter3-resolve.md
 chapter4-loaders.md
 chapter5-plugins.md
+chapter6-custom-loaders.md
+chapter7-examples.md
+chapter8-server-side.md

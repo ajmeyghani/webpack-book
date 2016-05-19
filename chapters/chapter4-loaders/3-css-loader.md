@@ -55,31 +55,41 @@ As you can see the content of the css file has been exported as a string literal
 
 ### Creating Separate CSS Outputs
 
-Install the plugin and then require it.
-
-
-First you need to use the extract plugin the loader definition. and then specify the name of the output file by defining a plugin definition
+In order to create a separate css file instead, we need to use the `extract-text-webpack-plugin` plugin. We haven't talked about plugins yet, but for now we don't have worry so much about it. All we need to know is that we can use this particular plugin to spit out a separate CSS file. Update your `webpack.config.js` file to look like the following:
 
 ```javascript
+var path = require('path');
+// ------------ Require the Plugin ------------ \\
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+// ------------ Require Webpack ------------ \\
 var webpack = require('webpack');
 
 module.exports = {
-  // entry, output definitions ...
+  entry: './main.js',
+  output: {
+    path: path.resolve('./dist'),
+    filename: 'bundle.js'
+  },
   module: {
     loaders: [
       {
-        test:/\.css$/, loader:  ExtractTextPlugin.extract('style-loader', 'css-loader')
+        test: /\.html$/,
+        loader: 'raw'
+      },
+      {
+        test: /\.css$/,
+        // ------ Use the plugin to extract the content ------ \\
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
       }
-    ]
+    ],
   },
+  // ------ Register the plugin with Webpack ------
   plugins: [
-    new ExtractTextPlugin('main.css')
+    new ExtractTextPlugin('main.css') // <- name the output file: main.css
+                                      // The result would be placed in `dist`
   ]
 };
 ```
 
-
-**TODO**
-
+Notice that we are requiring the plugin, so make sure to install that with `npm i extract-text-webpack-plugin -D`. After you installed the plugin, you can then use in the loader config section to extract the result of `style!css`. Also note that we added an additional field called `plugins` and we have initialized the plugin with the name of the final output. Now if you run `webpack` you should see a file create in `dist/main.css`
 

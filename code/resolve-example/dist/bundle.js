@@ -44,17 +44,21 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(1);
-	module.exports = function (a) {
-	  return a * 10;
-	};
+	var Person = __webpack_require__(1);
+	var p = new Person();
+	console.log(p.walk());
 
 
 /***/ },
 /* 1 */
 /***/ function(module, exports) {
 
-	// removed by extract-text-webpack-plugin
+	function Person () {}
+	Person.prototype.walk = function () {
+	  return 'Walking...';
+	};
+	module.exports = Person;
+
 
 /***/ }
 /******/ ]);

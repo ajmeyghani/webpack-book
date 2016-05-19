@@ -1,5 +1,6 @@
 chapter0-preface.md
-chapter1.md
+chapter1-basics.md
 chapter2-entry-output.md
-chapter3-loaders.md
-chapter4-plugins.md
+chapter3-resolve.md
+chapter4-loaders.md
+chapter5-plugins.md

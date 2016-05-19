@@ -1,5 +1,5 @@
 {
-  "name": "code",
+  "name": "babel-example",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,9 @@
   "author": "Amin Meyghani <meyghania@gmail.com> (http://meyghani.com)",
   "license": "ISC",
   "devDependencies": {
-    "extract-text-webpack-plugin": "^1.0.1",
+    "babel-core": "^6.9.0",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
     "webpack": "^1.13.0"
   }
 }

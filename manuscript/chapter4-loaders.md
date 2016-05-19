@@ -91,6 +91,31 @@ var content = __webpack_require__(1);
 That's the magic of Webpack, it references modules by number and it uses its own require method to load them.
 
 
+## Url Loader
+
+In this section we are going to use Webpack to automatically load our assets, including images and font files.
+
+Using the following loader definition, you can automatically embed or load the assets in your app whenever they are required or referenced:
+
+```javascript
+loaders: [
+  {
+    test: /\.(png|jpg|jpeg)$|\.(woff|woff2|ttf|eot|svg)(.*)?$/,
+    loader: "url?limit=10000&name=[name][hash:6].[ext]", // spit out a file if larger than 10kb
+  }
+]
+```
+
+With this definition we are checking for any file that has any of the following extensions:
+
+`.png`, `.jpg`, `.jpeg`, `.woff`, `.woff2`, `.ttf`, `.eot`, `.svg`
+
+Whenever Webpack comes across any of these files, it would pass them through the `url` loader and would embed them if the filesize is less than the given limit. For example if you set the limit value to 10000, Webpack will only embed the file if the filesize is less 10kb, otherwise it will spit out a file for the asset named using the name string. For example if you set the name to `name=[name][hash:6].[ext]`, you will get the filename followed by a short hash and then followed by the extension of the file.
+
+Now if the size of the is larger than the limit, Webpack would use the `file-loader` to extract the content and spit out a file for the asset.
+
+**TODO**
+
 ## Loading CSS Files
 
 **Note**: From this point on, I assume that you have your work folder, main file, and Webpack config file are setup. For more information, see the previous section.
@@ -148,7 +173,112 @@ As you can see the content of the css file has been exported as a string literal
 
 ### Creating Separate CSS Outputs
 
+In order to create a separate css file instead, we need to use the `extract-text-webpack-plugin` plugin. We haven't talked about plugins yet, but for now we don't have worry so much about it. All we need to know is that we can use this particular plugin to spit out a separate CSS file. Update your `webpack.config.js` file to look like the following:
 
-**TODO**
+```javascript
+var path = require('path');
+// ------------ Require the Plugin ------------ \\
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+// ------------ Require Webpack ------------ \\
+var webpack = require('webpack');
+
+module.exports = {
+  entry: './main.js',
+  output: {
+    path: path.resolve('./dist'),
+    filename: 'bundle.js'
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.html$/,
+        loader: 'raw'
+      },
+      {
+        test: /\.css$/,
+        // ------ Use the plugin to extract the content ------ \\
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+      }
+    ],
+  },
+  // ------ Register the plugin with Webpack ------
+  plugins: [
+    new ExtractTextPlugin('main.css') // <- name the output file: main.css
+                                      // The result would be placed in `dist`
+  ]
+};
+```
+
+Notice that we are requiring the plugin, so make sure to install that with `npm i extract-text-webpack-plugin -D`. After you installed the plugin, you can then use in the loader config section to extract the result of `style!css`. Also note that we added an additional field called `plugins` and we have initialized the plugin with the name of the final output. Now if you run `webpack` you should see a file create in `dist/main.css`
+
+## Compiling ES2015 JavaScript
+
+In this section we are going to see how you can use the babel loader to compile ES2015 to ES5 JavaScript. The setup is similar to the previous section:
+
+```
+├── package.json
+├── src
+│   └── main.js
+└── webpack.config.js
+```
+
+but we just need to add another loader for any file that ends with the `.js` extension:
+
+```javascript
+{
+  test: /\.js$/, loader: 'babel',
+  exclude: 'node_modules',
+  query: {
+    presets: ['es2015']
+  }
+}
+```
+
+Here we have specified that we want to use the babel loader to process our JavaScript files. Also note that we added an extra field called exclude. Using this option you can tell Webpack not to look into the `node_modules` folder. However, the preferred way is to tell Webpack which directories you want it to look at using the `include` option. Also the query option adds babel-specific options to use the 'es2015' preset:
+
+```javascript
+{
+  test: /\.js$/, loader: 'babel',
+  include: path.resolve('./src'),
+  query: {
+    presets: ['es2015']
+  }
+}
+```
+
+Now your config file shold look like the following:
+
+**webpack.config.js**
+
+```javascript
+var path = require('path');
+
+module.exports = {
+  entry: './src/main.js',
+  output: {
+    path: path.resolve('dist'),
+    filename: 'bundle.js'
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        include: path.resolve('src'),
+        loader: 'babel',
+        query: {
+          presets: ['es2015']
+        }
+      }
+    ]
+  }
+};
+```
+
+Now we just have to install the dev dependencies and then we can run Webpack to transpile the JavaScript:
+
+```bash
+npm i babel-core babel-loader babel-preset-es2015 webpack -D
+```
+then `./node_modules/.bin/webpack` to run Webpack. After running it, you should see the output in the `dist` folder.
 
 

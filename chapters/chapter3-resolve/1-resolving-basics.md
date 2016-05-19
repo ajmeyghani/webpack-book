@@ -53,9 +53,10 @@ If you compile this with the `webpack` command, you will get an error from Webpa
 
 ```bash
 ERROR in ./main.js
-Module not found: Error: Cannot resolve module 'person' in /Users/amin.meyghani/projects/webpackmin-book/code/resolve-example
+Module not found: Error: Cannot resolve module 'person' in
+/Users/amin.meyghani/projects/webpackmin-book/code/resolve-example
  @ ./main.js 1:13-30
- ```
+```
 
 Let's go through this an understand why this happens. As mentioned before, if a relative path to a module is used, Webpack will resolve the module relative to the file loading the module, otherwise it will use Node's strategy. So in this case, given `require('person')` Webpack will, loosely speaking, first look into `./node_modules/person.js`, then in `../node_modules/person.js` and so on. That's why it can't resolve the module. But we can use the `resolve.modulesDirectories` to add the `src` folder to the list of folders:
 

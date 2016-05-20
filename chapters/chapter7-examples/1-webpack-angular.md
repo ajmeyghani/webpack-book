@@ -514,4 +514,21 @@ npm run test # to run in ci mode
 npm run tdd # to run in tdd mode
 ```
 
+If you want to run the tests with PhantomJS, make sure you have it installed:
+
+```bash
+npm i phantomjs -g
+```
+
+And then you can run the tests in CI mode and you would get some output like the following:
+
+```
+1..2
+# tests 2
+# pass  2
+# skip  0
+# fail  0
+
+# ok
+```
 

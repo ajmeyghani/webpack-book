@@ -15,7 +15,8 @@ When prompted accept all the defaults to generate your package file.
 After that, install some dependencies:
 
 ```bash
-npm i webpack concurrently express faker nodemon babel-core babel-loader babel-preset-es2015 babel-plugin-add-module-exports raw-loader -D
+npm i webpack concurrently express faker nodemon babel-core babel-loader \
+      babel-preset-es2015 babel-plugin-add-module-exports raw-loader -D
 ```
 
 After all the dependencies are installed, create a symbolic link to the `bin` folder of `node_modules`:
@@ -295,7 +296,9 @@ module.exports = function (ngModule) {}
 Now the body of the function is familiar, you can pretend that `ngModule` is simple an instance of the `angular.module`. But the neat part is that you don't have to care what the name of the module is, you simply add stuff to the instance. Again, this is what makes working with Angular and Webpack special, the fact that you get to decouple your modules is a big win. This will protect you from module definitions like the following:
 
 ```javascript
-var app = angular.module('app', ['moduleName1', 'moduleName2', 'moduleName3', 'moduleName4', 'moduleName5']);
+var app = angular.module('app', [
+  'moduleName1', 'moduleName2', 'moduleName3', 'moduleName4', 'moduleName5'
+]);
 ```
 
 Now let's look at creating our page directive which is going to contain the definition of our directive including the controller and the template definition:

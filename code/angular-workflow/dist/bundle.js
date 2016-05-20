@@ -57,7 +57,7 @@ return /******/ (function(modules) { // webpackBootstrap
   \*********************/
 /***/ function(module, exports, __webpack_require__) {
 
-	eval("'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nvar angular = __webpack_require__(/*! angular */ 1);\nvar appModule = angular.module('app', []);\n\n__webpack_require__(/*! services */ 2)(appModule);\n__webpack_require__(/*! page/page-directive */ 6)(appModule);\n\nangular.element(document).ready(function () {\n  angular.bootstrap(document.getElementsByTagName('body')[0], ['app']);\n});\n\nexports.default = appModule;\nmodule.exports = exports['default'];\n\n/*****************\n ** WEBPACK FOOTER\n ** ./src/main.js\n ** module id = 0\n ** module chunks = 0\n **/\n//# sourceURL=webpack:///./src/main.js?");
+	eval("'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nvar angular = __webpack_require__(/*! angular */ 1);\nvar appModule = angular.module('app', []);\n\n__webpack_require__(/*! services */ 2)(appModule);\n__webpack_require__(/*! page/page-directive */ 3)(appModule);\n\nangular.element(document).ready(function () {\n  angular.bootstrap(document.getElementsByTagName('body')[0], ['app']);\n});\n\nexports.default = appModule;\nmodule.exports = exports['default'];\n\n/*****************\n ** WEBPACK FOOTER\n ** ./src/main.js\n ** module id = 0\n ** module chunks = 0\n **/\n//# sourceURL=webpack:///./src/main.js?");
 
 /***/ },
 /* 1 */
@@ -78,7 +78,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	eval("'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nexports.default = function (ngModule) {\n  ngModule.factory('PostService', function ($http) {\n    return {\n      getPosts: function getPosts() {\n        return $http.get('/api/posts');\n      }\n    };\n  });\n};\n\nmodule.exports = exports['default'];\n\n/*****************\n ** WEBPACK FOOTER\n ** ./src/services/index.js\n ** module id = 2\n ** module chunks = 0\n **/\n//# sourceURL=webpack:///./src/services/index.js?");
 
 /***/ },
-/* 3 */,
+/* 3 */
+/*!************************************!*\
+  !*** ./src/page/page-directive.js ***!
+  \************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	eval("'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nexports.default = function (pageModule) {\n\n  pageModule.run(function ($templateCache) {\n    $templateCache.put('page-tpl', __webpack_require__(/*! ./page-tpl.html */ 4));\n  });\n\n  pageModule.directive('page', function () {\n    return {\n      restrict: 'E',\n      controller: 'pageCtrl',\n      controllerAs: 'pageCtrl',\n      templateUrl: 'page-tpl'\n    };\n  });\n\n  pageModule.controller('pageCtrl', function ($scope, PostService) {\n    /* More on $scope vs controllerAs:\n        https://toddmotto.com/digging-into-angulars-controller-as-syntax/\n    */\n    var pageCtrl = this;\n    pageCtrl.hello = 'hello there';\n    PostService.getPosts().then(function ok(resp) {\n      pageCtrl.posts = resp.data;\n      $scope.$broadcast('posts:loaded', resp.data);\n    }, function err(errResp) {\n      console.log(errResp);\n    });\n\n    $scope.$watch('pageCtrl.posts', function (newVal, oldVal) {\n      if (newVal !== oldVal) {\n        console.log(newVal);\n      }\n    });\n\n    /* In case you need to use events */\n    $scope.$on('posts:loaded', function (e, posts) {\n      console.log('posts loaded');\n      // console.log(posts);\n    });\n  });\n};\n\nmodule.exports = exports['default'];\n\n/*****************\n ** WEBPACK FOOTER\n ** ./src/page/page-directive.js\n ** module id = 3\n ** module chunks = 0\n **/\n//# sourceURL=webpack:///./src/page/page-directive.js?");
+
+/***/ },
 /* 4 */
 /*!********************************!*\
   !*** ./src/page/page-tpl.html ***!
@@ -86,16 +94,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	eval("module.exports = \"<p>{{pageCtrl.hello}}</p>\\n<ul>\\n  <li ng-repeat=\\\"post in pageCtrl.posts\\\">\\n    {{ post.title }}\\n  </li>\\n</ul>\\n\\n\\n\"\n\n/*****************\n ** WEBPACK FOOTER\n ** ./src/page/page-tpl.html\n ** module id = 4\n ** module chunks = 0\n **/\n//# sourceURL=webpack:///./src/page/page-tpl.html?");
-
-/***/ },
-/* 5 */,
-/* 6 */
-/*!************************************!*\
-  !*** ./src/page/page-directive.js ***!
-  \************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	eval("'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nexports.default = function (pageModule) {\n\n  pageModule.run(function ($templateCache) {\n    $templateCache.put('page-tpl', __webpack_require__(/*! ./page-tpl.html */ 4));\n  });\n\n  pageModule.directive('page', function () {\n    return {\n      restrict: 'E',\n      controller: 'pageCtrl',\n      controllerAs: 'pageCtrl',\n      templateUrl: 'page-tpl'\n    };\n  });\n\n  pageModule.controller('pageCtrl', function ($scope, PostService) {\n    /* More on $scope vs controllerAs:\n        https://toddmotto.com/digging-into-angulars-controller-as-syntax/\n    */\n    var self = this;\n    self.hello = 'hello there';\n    PostService.getPosts().then(function ok(resp) {\n      self.posts = resp.data;\n      $scope.$broadcast('posts:loaded', resp.data);\n    }, function err(errResp) {\n      console.log(errResp);\n    });\n\n    /* In case you need a watch */\n    $scope.$watch(angular.bind(self, function () {\n      return this.posts;\n    }), function (newVal, oldVal) {\n      // ...\n    });\n\n    /* In case you need to use events */\n    $scope.$on('posts:loaded', function (e, posts) {\n      console.log('posts loaded');\n      console.log(posts);\n    });\n  });\n};\n\nmodule.exports = exports['default'];\n\n/*****************\n ** WEBPACK FOOTER\n ** ./src/page/page-directive.js\n ** module id = 6\n ** module chunks = 0\n **/\n//# sourceURL=webpack:///./src/page/page-directive.js?");
 
 /***/ }
 /******/ ])

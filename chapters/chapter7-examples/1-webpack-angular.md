@@ -339,19 +339,28 @@ export default pageModule => {
   });
 
   pageModule.controller('pageCtrl', function($scope, PostService) {
-    const self = this;
-    self.hello = 'hello there';
+    const pageCtrl = this;
+    pageCtrl.hello = 'hello there';
     PostService.getPosts()
       .then(function ok(resp) {
-        self.posts = resp.data;
+        pageCtrl.posts = resp.data;
         $scope.$broadcast('posts:loaded', resp.data);
       },
       function err(errResp) {
         console.log(errResp);
       });
+
+    $scope.$watch('pageCtrl.posts', function(newVal, oldVal) {
+        if (newVal !== oldVal) {
+          console.log(newVal);
+        }
+    });
+
+    $scope.$on('posts:loaded', function (e, posts) {
+      // can do stuff once the posts are loaded.
+    });
   });
 };
-
 ```
 
 Let's go through the Webpack-specific stuff. First of all, we are adding the template of our directive to the cache:
@@ -394,5 +403,115 @@ The rest is pretty much standard Angular code. Now that you have the directive, 
 ```
 
 After you load the page, you should be to see the posts that are returned from our Express API!
+
+### Testing
+
+Let's look at how you would go about testing your code. For this section we are going to use the Jasmine testing framework and Testem to run our tests.
+
+First we need to install the Testem Runner, Angular Mocks, and some polyfills:
+
+```bash
+npm i testem angular-mocks babel-polyfill -D
+```
+
+After that make the `testem.json` config file and copy paste the following:
+
+**testem.json**
+
+```json
+{
+  "framework": "jasmine2",
+  "src_files": [
+    "dist/bundle.js",
+    "test/client/unit/**/*.js"
+  ],
+  "serve_files": [
+    "node_modules/babel-polyfill/dist/polyfill.min.js",
+    "node_modules/angular/angular.js",
+    "node_modules/angular-mocks/angular-mocks.js",
+    "dist/bundle.js",
+    "test/client/unit/**/*.js"
+  ],
+  "launch_in_dev": ["Chrome", "PhantomJS"],
+  "launch_in_ci": ["PhantomJS"]
+}
+```
+
+As you can see from the configuration file, we are loading the app JavaScript in the `src_files` and the dependencies in the `serve_files` field. Also, we are specifying the browsers that we want to use in different environments, that is PhantomJS in CI and Chrome, PhantomJS in development.
+
+Now that we have the configuration set up, let's create our test folder:
+
+```bash
+mkdir -p test/client/unit
+```
+
+We are going to put all of unit tests in the `unit` folder and any subdirectory that we choose to make inside there. Let's add a simple test to test the `pageCtrl`:
+
+```bash
+touch test/client/unit/page-ctrl-test.js
+```
+
+After you created the file, copy paste the following:
+
+**test/client/unit/page-ctrl-test.js**
+
+```javascript
+describe('pageCtrl instance:', function() {
+
+  var $controller;
+  var $rootScope;
+  var $scope;
+  var $q;
+  var mockPostService;
+
+  beforeEach(function () {
+    module('app');
+    inject(function(_$controller_, _$rootScope_, _$q_, _PostService_) {
+        $controller = _$controller_;
+        $rootScope = _$rootScope_;
+        $q = _$q_;
+        $scope = $rootScope.$new();
+        mockPostService = jasmine.createSpyObj('PostService', ['getPosts']);
+        mockPostService.getPosts.and.returnValue($q.when({
+          data: [{id: 'blah',title: 'blah',content: 'blah'}]
+        }));
+        underTest = $controller('pageCtrl', {
+            '$scope': $scope,
+            'PostService': mockPostService
+        });
+        $scope.$apply();
+      })
+  });
+
+  it('should have its `hello` property set. At this point we dont care what the \
+    value is.', function() {
+    expect(underTest.hello).toBeDefined();
+  });
+
+  it('should have the `posts` field set with bunch of values which would confirm \
+    `PostService.getPosts` was called.', function () {
+    expect(mockPostService.getPosts).toHaveBeenCalled();
+    expect(underTest.posts).toEqual([{
+      id: 'blah', title: 'blah', content: 'blah'
+    }]);
+    expect(underTest.posts.length).toBe(1);
+    expect(mockPostService.getPosts.calls.count()).toBe(1);
+  });
+
+});
+```
+This is a pretty standard Angular test, we are asserting that our controller have the fields set properly. Now, to run the tests, just run `./bin/testem`. After that you should a chrome window opening where you can see the status of the tests. You could also add that command to the scripts section of the `package.json` file:
+
+```json
+"tdd": "./bin/testem",
+"test": "bin/testem  ci -P 2"
+```
+
+Now you can run the following to run the tests:
+
+```bash
+npm run test # to run in ci mode
+npm run tdd # to run in tdd mode
+```
 
 

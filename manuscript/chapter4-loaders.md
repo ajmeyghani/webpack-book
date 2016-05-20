@@ -246,7 +246,7 @@ Here we have specified that we want to use the babel loader to process our JavaS
 }
 ```
 
-Now your config file shold look like the following:
+Now your config file and the `main.js` file should look like the following:
 
 **webpack.config.js**
 
@@ -272,6 +272,16 @@ module.exports = {
     ]
   }
 };
+```
+
+**src/main.js**
+
+```javascript
+export default class Person {
+  walk() {
+    return 'walkin...';
+  }
+}
 ```
 
 Now we just have to install the dev dependencies and then we can run Webpack to transpile the JavaScript:

@@ -14,11 +14,9 @@ export default pageModule => {
   });
 
   pageModule.controller('pageCtrl', function($scope, PostService) {
-    /* More on $scope vs controllerAs:
-        https://toddmotto.com/digging-into-angulars-controller-as-syntax/
-    */
     const pageCtrl = this;
     pageCtrl.hello = 'hello there';
+
     PostService.getPosts()
       .then(function ok(resp) {
         pageCtrl.posts = resp.data;
@@ -28,17 +26,14 @@ export default pageModule => {
         console.log(errResp);
       });
 
-
     $scope.$watch('pageCtrl.posts', function(newVal, oldVal) {
-        if (newVal !== oldVal) {
-          console.log(newVal);
-        }
+      if (newVal !== oldVal) {
+        console.log(newVal);
+      }
     });
 
-    /* In case you need to use events */
     $scope.$on('posts:loaded', function (e, posts) {
-      console.log('posts loaded');
-      // console.log(posts);
+      // all the posts are loaded ...
     });
 
   });

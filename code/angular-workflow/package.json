@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "./bin/concurrently \"npm run watch\" \"npm run server\"",
+    "dev": "rm -rf dist && ./bin/concurrently \"npm run watch\" \"npm run server\"",
     "watch": "./bin/webpack -w --debug --devtool eval --output-pathinfo",
     "server": "./bin/nodemon -w server.js -w webpack.config.js server.js",
-    "build": "webpack -d",
+    "build:debug": "NODE_ENV=debug webpack -d",
+    "build": "NODE_ENV=production webpack --devtool sourcemap",
+    "build:all": "rm -rf dist && npm run build && npm run build:debug && webpack --debug --devtool eval --output-pathinfo",
     "tdd": "./bin/testem",
     "test": "bin/testem  ci -P 2"
   },

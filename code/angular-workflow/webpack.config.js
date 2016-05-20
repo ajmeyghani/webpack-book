@@ -1,10 +1,24 @@
 var path = require('path');
+var webpack = require('webpack');
+var isProd = process.env.NODE_ENV === 'production';
+var isDebug = process.env.NODE_ENV === 'debug';
+
+var plugins = [];
+if (isProd) {
+  var uglify = new webpack.optimize.UglifyJsPlugin({
+      mangle: false,
+      compress: {
+        warnings: false
+      }
+  });
+  plugins.push(uglify);
+}
 
 module.exports = {
   entry: 'main.js',
   output: {
     path: path.resolve('dist'),
-    filename: 'bundle.js',
+    filename: isProd ?  'bundle.min.js' : isDebug ? 'bundle.debug.js' : 'bundle.js',
     publicPath: '/public/',
     library: 'myapp',
     libraryTarget: 'umd'
@@ -32,6 +46,7 @@ module.exports = {
   },
   externals: {
     angular: 'angular'
-  }
+  },
+  plugins: plugins
 };
 

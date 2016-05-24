@@ -1,0 +1,16 @@
+{
+  "framework": "jasmine2",
+  "src_files": [
+    "dist/bundle.js",
+    "test/client/unit/**/*.js"
+  ],
+  "serve_files": [
+    "node_modules/babel-polyfill/dist/polyfill.min.js",
+    "node_modules/angular/angular.js",
+    "node_modules/angular-mocks/angular-mocks.js",
+    "dist/bundle.js",
+    "test/client/unit/**/*.js"
+  ],
+  "launch_in_dev": ["Chrome", "PhantomJS"],
+  "launch_in_ci": ["PhantomJS"]
+}

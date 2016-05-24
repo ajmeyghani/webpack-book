@@ -1,0 +1,20 @@
+{
+  "name": "webpack-public-path",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Amin Meyghani <meyghania@gmail.com> (http://meyghani.com)",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^0.23.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.0"
+  },
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}

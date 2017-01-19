@@ -10,7 +10,7 @@ Like always we are going to set up a project folder and the webpack.config.js fi
 mkdir -p ~/Desktop/webpack-css-example && cd $_ && npm init
 ```
 
-Like always, once prompted accept all the defaults to create the package.json file. Once the file has been created you are ready to go. First, let's install all the dependencies including Webpack to get started:
+Once prompted, accept all the defaults to create the package.json file. Once the file has been created you are ready to go. First, let's install all the dependencies including Webpack to get started:
 
 ```bash
 npm i autoprefixer css-loader postcss-loader precss style-loader webpack -D

@@ -15,7 +15,10 @@ npm init
 After you run `npm init` it will ask you a couple of questions. You can just use the defaults by keep hitting enter on the keyboard. Then, run the following to install the development dependencies:
 
 ```bash
-npm install babel-core babel-loader babel-plugin-add-module-exports babel-preset-es2015 style-loader babel-preset-react webpack -D
+npm install babel-core babel-loader \
+babel-plugin-add-module-exports \
+babel-preset-es2015 \
+babel-preset-react webpack -D
 ```
 
 After all the dev dependencies are installed, we need to install React:
@@ -24,7 +27,9 @@ After all the dev dependencies are installed, we need to install React:
 npm install react react-dom -S
 ```
 
-Now, we can add the `webpack.config.js` file:
+### Creating the Config File
+
+Now that we have all the dependencies installed, we can add the `webpack.config.js` file:
 
 ```bash
 touch webpack.config.js
@@ -91,7 +96,9 @@ src/main.jsx
 ...
 ```
 
-Because our main file is going to contain some JSX, we are going to name the file `main.jsx`:
+### Adding the Main File
+
+Because our main file is going to contain some JSX, we are going to name the file `main.jsx`. Let's create it in the `src` folder:
 
 ```bash
 touch src/main.jsx
@@ -191,7 +198,6 @@ If you don't want to run `./node_modules/.bin/webpack` everytime, you can just c
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
-    "style-loader": "^0.13.1",
     "webpack": "^1.14.0"
   },
   "dependencies": {

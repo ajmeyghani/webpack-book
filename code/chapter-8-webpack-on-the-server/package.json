@@ -1,5 +1,5 @@
 {
-  "name": "chapter8-server-side",
+  "name": "webpack-on-the-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,6 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "webpack": "^1.15.0"
+    "express": "^4.15.3"
+  },
+  "devDependencies": {
+    "webpack": "^1.15.0",
+    "babel-core": "^5.8.34",
+    "babel-loader": "^5.3.3",
+    "babel-polyfill": "^6.2.0"
   }
 }

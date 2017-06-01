@@ -27,7 +27,7 @@ In order to know if you should care about Webpack, first you need to truly under
 Now what does all that mean:
 
 - Splitting dependencies means loading the dependencies when you only need them resulting in smoother user experience
-- Keeping initial app load time low means faster star up and higher user retention
+- Keeping initial app load time low means faster start up and higher user retention
 - Making static assets to be used as modules means static assets like images won't be any different than JavaScript code and can enjoy Webpack's features like on-demand loading
 - Integrating with 3rd-party libraries means that libraries can enjoy optimizations and other features that JavaScript modules enjoy
 - Customizability means that you can mold Webpack into your specific needs, and you would be surprised what you can make it do
